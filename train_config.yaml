@@ -1,0 +1,60 @@
+# LoRA 微调 Gemma 3 270M Instruct 的超参数配置
+
+model:
+  base_model: "google/gemma-3-270m-it"
+  source: "ModelScope"
+  model_type: "gemma3_text"
+  parameters: 271895168
+  dtype: "bfloat16"
+  attn_implementation: "sdpa"
+  gradient_checkpointing: true
+
+lora:
+  method: "LoRA (PEFT)"
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "up_proj"
+    - "down_proj"
+    - "gate_proj"
+  trainable_params: 3796992
+  trainable_percent: 1.3965
+
+training:
+  train_data: "train.jsonl"
+  train_samples: 219
+  valid_data: "valid.jsonl"
+  valid_samples: 17
+  num_epochs: 15
+  per_device_batch_size: 2
+  gradient_accumulation_steps: 4
+  effective_batch_size: 8
+  max_length: 2048
+  learning_rate: 1.5e-4
+  lr_scheduler: "linear_warmup"
+  warmup_ratio: 0.05
+  optimizer: "AdamW"
+  bf16: true
+  loss: "cross_entropy (mask: prompt_ids=-100, assistant_ids=token_ids)"
+  prompt_format: "tokenizer.apply_chat_template (Gemma 3 instruct)"
+  rep_penalty_weight: 0.0
+  reward_threshold: 0.0
+  reward_weighted: false
+
+generation:
+  max_new_tokens: 3072
+  do_sample: false
+  temperature: 1.0
+  eos_handling: "stop at first </svg> token"
+  truncation: "cut at first </svg> after generation"
+
+environment:
+  gpu: "NVIDIA A100 80GB"
+  cuda_includes: "/opt/conda/include/python3.10"
+  pytorch: "2.13.0+cu129"
+  peft: "0.19.1"

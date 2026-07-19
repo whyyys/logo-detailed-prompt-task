@@ -1,0 +1,6 @@
+```svg
+<svg width="256" height="256" xmlns="http://www.svg.org/svg" viewBox="0 0 256 256" xmlns:defs="http://www.svg.org/svg" xmlns:radii="http://www.svg.org/svg" xmlns:circle="http://www.svg.org/svg" xmlns:ellipse="http://www.svg.org/svg" xmlns:rect="http://www.svg.org/svg" xmlns:polygon="http://www.svg.org/svg" xmlns:line="http://www.svg.org/svg" xmlns:g="http://www.svg.org/svg" xmlns:circle="http://www.svg.org/svg" xmlns:patch="http://www.svg.org/svg"
+    <defs="fill-circle">
+        <path d="fill-circle(10, 10, 10, 10)">
+            <circle cx="50" cy="50" r="5" fill="blue" />
+        </path>
